@@ -5,9 +5,10 @@
 #include <stdbool.h>
 
 typedef struct {
-    uint8_t error_code;     // 0 indicates success; non-zero is an error code
-    uint8_t* data;          // Pointer to the response data buffer
-    size_t len;             // Length of the response data
+    bool send_response;     //  Flag to send a response
+    uint8_t error_code;     //  0 indicates success; non-zero is an error code & cancels active Rx action
+    uint8_t* data;          //  Pointer to the response data buffer
+    size_t len;             //  Length of the response data
 } FlexDiagResponse;
 
 /**

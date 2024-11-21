@@ -7,11 +7,59 @@
 #include "../lookup/FlexCommandLookup.h"
 
 typedef struct {
-    uint8_t security_level;             //  User-controlled security level: 0 default, 0xFF highest
-    FlexDiagCommand* command_table;   //  Table of command lookup objects
+    uint8_t active_security_level;      //  User-controlled security level: 0 default, 0xFF highest
+    FlexDiagCommand* command_table;     //  Table of command lookup objects
     size_t command_table_len;           //  Length of the command table
     FlexDiagResponse response;          //  Response object
 } FlexDiagSession;
+
+/**
+ * @brief Process a full message by service ID (first byte)
+ * 
+ * @param session Pointer to session object
+ * @param service_id Service ID of the message (initial byte)
+ * @param data Pointer to recieved data excluding service id
+ * @param len Length of recieved data excluding service id
+ * @return true Response was requested
+ * @return false No response was requested
+ */
+bool fd_session_process_by_id(FlexDiagSession* session, const uint8_t service_id, const uint8_t* data, const size_t len);
+
+/**
+ * @brief Process a full message by service name.
+ * 
+ * @param session Pointer to session object
+ * @param name Exact name of the service (case-insensitive)
+ * @param data Pointer to recieved data excluding service id
+ * @param len Length of recieved data excluding service id
+ * @return true Response was requested
+ * @return false No response was requested
+ */
+bool fd_session_process_by_name(FlexDiagSession* session, const char* name, const uint8_t* data, const size_t len);
+
+/**
+ * @brief Process a partial message fragment by service name. Partial messages are technically optional, but you will have to recieve entire CAN ISO-TP messages before responding with a denial condition.
+ * 
+ * @param session Pointer to session object
+ * @param service_id Service ID of the message (initial byte)
+ * @param data Pointer to recieved data
+ * @param len Length of recieved data
+ * @return true Response was requested
+ * @return false No response was requested
+ */
+bool fd_session_process_partial_by_id(FlexDiagSession* session, const uint8_t service_id, const uint8_t* data, const size_t len);
+
+/**
+ * @brief Process a partial message fragment by service name Partial messages are technically optional, but you will have to recieve entire CAN ISO-TP messages before responding with a denial condition.
+ * 
+ * @param session Pointer to session object
+ * @param name Exact name of the service (case-insensitive)
+ * @param data Pointer to recieved data
+ * @param len Length of recieved data
+ * @return true Response was requested
+ * @return false No response was requested
+ */
+bool fd_session_process_partial_by_name(FlexDiagSession* session, const char* name, const uint8_t* data, const size_t len);
 
 /**
  * @brief Initialize the FlexDiagSession object with a specified response buffer.
