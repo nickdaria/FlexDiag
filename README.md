@@ -3,7 +3,7 @@ FlexDiag is a modular C library designed to make implementing automotive-style d
 
 # 🚀 Key Features
 - **Concurrent Sessions:** Support multiple independent diagnostic sessions effortlessly.
-- **Custom Security Levels:** Per-session user-managed security levels for access control. Keep it at 0 for unrestricted access or define thresholds for specific actions.
+- **Custom Security Levels:** Per-session user-managed security levels for access control. Disable, allow by default, or restrict specific actions.
 - **Lookup Tables:** Map internal variables of any size by ID or name for seamless read and write operations.
 - **Function Tables:** Map functions by ID or name, with support for parameterized calls.
 - **Default Responses:** Built-in handling for "not found" and "access denied" errors.
