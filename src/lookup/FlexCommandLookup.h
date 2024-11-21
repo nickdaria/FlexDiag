@@ -25,6 +25,5 @@ typedef void (*FlexPartialDataCallback)(
 typedef struct {
     const FlexLookupBase base;                        //  Base lookup object
     const FlexDataCallback callback_rx;               //  Callback for completed data
-    const FlexDataCallback callback_partial_rx;       //  Callback for partial data, can be used to deny data based on initial request
-    const FlexPartialDataCallback callback_can_frame; //  Optional callback for partial data, useful for denying actions on first CAN frame
+    const FlexDataCallback callback_partial_rx;       //  Optional callback for partial data, can be used to deny data based on initial request
 } FlexDiagCommand;
