@@ -4,8 +4,7 @@
 #include <stddef.h>
 #include "FlexLookupBase.h"
 
-// Forward declaration of FlexDiagSession
-typedef struct FlexDiagSession FlexDiagSession;
+struct FlexDiagSession;
 
 //  Callback for completed data rx
 typedef void (*FlexFunctionCallback)(

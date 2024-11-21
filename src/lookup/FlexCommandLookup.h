@@ -4,19 +4,18 @@
 #include <stddef.h>
 #include "FlexLookupBase.h"
 
-// Forward declaration of FlexDiagSession
-typedef struct FlexDiagSession FlexDiagSession;
+struct FlexDiagSession;
 
 //  Callback for completed data rx
 typedef void (*FlexDataCallback)(
-    FlexDiagSession* session,
+    struct FlexDiagSession* session,
     uint8_t* data,
     const size_t len
 );
 
 //  Callback for frames by type
 typedef void (*FlexPartialDataCallback)(
-    FlexDiagSession* session,
+    struct FlexDiagSession* session,
     const size_t msg_idx,
     uint8_t* msg_data,
     const size_t msg_len
