@@ -17,16 +17,15 @@ typedef void (*FlexDataCallback)(
 //  Callback for frames by type
 typedef void (*FlexPartialDataCallback)(
     FlexDiagSession* session,
-    uint8_t frame_type,
+    const size_t msg_idx,
     uint8_t* msg_data,
-    const size_t msg_len,
-    const size_t msg_idx
+    const size_t msg_len
 );
 
 //  Command entry object
 typedef struct {
-    FlexLookupBase base;                        //  Base lookup object
-    FlexDataCallback callback_rx;               //  Callback for completed data
-    FlexDataCallback callback_partial_rx;       //  Callback for partial data, can be used to deny data based on initial request
-    FlexPartialDataCallback callback_can_frame; //  Optional callback for partial data, useful for denying actions on first CAN frame
+    const FlexLookupBase base;                        //  Base lookup object
+    const FlexDataCallback callback_rx;               //  Callback for completed data
+    const FlexDataCallback callback_partial_rx;       //  Callback for partial data, can be used to deny data based on initial request
+    const FlexPartialDataCallback callback_can_frame; //  Optional callback for partial data, useful for denying actions on first CAN frame
 } FlexDiagCommand;
