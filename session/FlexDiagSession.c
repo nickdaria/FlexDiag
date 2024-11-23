@@ -2,9 +2,40 @@
 #include <stdlib.h>
 
 /*
+    Helpers
+*/
+FlexDiagCommand* fd_lookup_command_by_id(FlexDiagSession* session, const uint8_t service_id) {
+    for (size_t i = 0; i < session->command_table_len; i++) {
+        if (session->command_table[i].base.id == service_id) {
+            return &session->command_table[i];
+        }
+    }
+
+    return NULL;
+}
+
+/*
     Process Data
 */
-bool fd_session_process_by_id(FlexDiagSession* session, const uint8_t service_id, const uint8_t* data, const size_t len);
+bool fd_session_process_by_id(FlexDiagSession* session, const uint8_t service_id, const uint8_t* data, const size_t len) {
+    //  Reset response
+    fd_response_reset(&session->response);
+    session->response.service_id = service_id;
+
+    //  Lookup command
+    FlexDiagCommand* command = fd_lookup_command_by_id(session, service_id);
+    if (command == NULL) {
+        //  Return not found
+        return true;
+    }
+
+    //  Process command
+    if (command->callback_rx != NULL) {
+        command->callback_rx(session, data, len);
+    }
+
+    return session->response.send_response;
+}
 
 
 bool fd_session_process_by_name(FlexDiagSession* session, const char* name, const uint8_t* data, const size_t len);
@@ -31,7 +62,8 @@ void fd_init_session(FlexDiagSession* session, FlexDiagCommand* command_table, c
 
     //  Set response buffer
     session->response.data = response_buf;
-    session->response.len = response_buf_len;
+    session->response.len_max = response_buf_len;
+    session->response.len = 0;
 
     //  Reset response
     fd_response_reset(&session->response);
