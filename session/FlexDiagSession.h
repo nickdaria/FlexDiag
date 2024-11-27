@@ -79,3 +79,10 @@ void fd_init_session(FlexDiagSession* session, FlexDiagCommand* command_table, c
  * @return false Failed to allocate resources
  */
 bool fd_init_session_alloc(FlexDiagSession* session, FlexDiagCommand* command_table, const size_t command_table_len, const size_t response_buf_len);
+
+/**
+ * @brief Deinitialize the FlexDiagSession object and free allocated resources
+ * 
+ * @param session Pointer to session object to deinitialize
+ */
+void fd_deinit_session(FlexDiagSession* session);

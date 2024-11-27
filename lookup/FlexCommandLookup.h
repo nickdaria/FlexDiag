@@ -9,7 +9,7 @@ struct FlexDiagSession;
 //  Callback for completed data rx
 typedef void (*FlexDataCallback)(
     struct FlexDiagSession* session,
-    uint8_t* data,
+    const uint8_t* data,
     const size_t len
 );
 
@@ -17,7 +17,7 @@ typedef void (*FlexDataCallback)(
 typedef void (*FlexPartialDataCallback)(
     struct FlexDiagSession* session,
     const size_t msg_idx,
-    uint8_t* msg_data,
+    const uint8_t* msg_data,
     const size_t msg_len
 );
 

@@ -31,7 +31,7 @@ bool fd_session_process_by_id(FlexDiagSession* session, const uint8_t service_id
 
     //  Process command
     if (command->callback_rx != NULL) {
-        command->callback_rx(session, data, len);
+        command->callback_rx((struct FlexDiagSession*)session, (uint8_t*)data, len);
     }
 
     return session->response.send_response;
@@ -80,4 +80,12 @@ bool fd_init_session_alloc(FlexDiagSession* session, FlexDiagCommand* command_ta
     //  Initialize session
     fd_init_session(session, command_table, command_table_len, response_buf, response_buf_len);
     return true;
+}
+
+void fd_deinit_session(FlexDiagSession* session) {
+    //  Free response buffer
+    free(session->response.data);
+    session->response.data = NULL;
+    session->response.len = 0;
+    session->response.len_max = 0;
 }
